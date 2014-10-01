@@ -1,0 +1,33 @@
+{
+  "name": "diaspora-jsxc",
+  "version": "1.0.0-diaspora1",
+  "homepage": "https://github.com/Zauberstuhl/jsxc",
+  "authors": [
+    "Lukas Matt <lukas.matt@sophos.com>"
+  ],
+  "description": "Real time chat app",
+  "main": [
+    "jsxc.css",
+    "jsxc.lib.js",
+    "jsxc.lib.muc.js",
+    "jsxc.lib.webrtc.js",
+    "jsxc.webrtc.css"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "xmpp",
+    "chat",
+    "strophe",
+    "diaspora"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
