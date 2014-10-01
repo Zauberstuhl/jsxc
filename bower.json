@@ -35,6 +35,6 @@
     "strophejs-plugins": "~0.0.3",
     "jquery": "~1.11.1",
     "jquery.ui": "~1.11.1",
-    "jsxc-deps": "~0.0.1"
+    "diaspora-jsxc-deps": "~0.0.2"
   }
 }
