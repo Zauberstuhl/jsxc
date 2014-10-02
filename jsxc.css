@@ -170,7 +170,7 @@ li .jsxc_name:hover {
  *############################*/
 div#jsxc_roster {
 	position: fixed;
-	top: 0px;
+	top: 39px;
 	bottom: 0px;
 	right: 0px;
 	width: 200px;
@@ -564,9 +564,10 @@ ul#jsxc_buddylist .jsxc_right div {
 	color: #fff;
 }
 
+/* scss will complain about a non existing operator '!='
 ul#jsxc_buddylist li[data-type!="chat"] .jsxc_right {
 	display: none;
-}
+}*/
 
 ul#jsxc_buddylist .jsxc_right div:hover {
 	opacity: 1.0;
