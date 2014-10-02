@@ -1,6 +1,6 @@
 {
   "name": "diaspora-jsxc",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "homepage": "https://github.com/Zauberstuhl/jsxc",
   "authors": [
     "Lukas Matt <lukas.matt@sophos.com>"
@@ -34,7 +34,6 @@
     "strophe": "~1.1.3",
     "strophejs-plugins": "~0.0.3",
     "jquery": "~1.11.1",
-    "jquery.ui": "~1.11.1",
-    "diaspora-jsxc-deps": "~0.0.2"
+    "jquery.ui": "~1.11.1"
   }
 }
