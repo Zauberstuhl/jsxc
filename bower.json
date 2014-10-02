@@ -11,7 +11,7 @@
     "jsxc.lib.js",
     "jsxc.lib.muc.js",
     "jsxc.lib.webrtc.js",
-    "jsxc.webrtc.css"
+    "jsxc.webrtc.css",
     "lib/dsa-ww.js",
     "lib/jquery.colorbox.css",
     "lib/jquery.colorbox-min.js",
