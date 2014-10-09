@@ -217,22 +217,6 @@ var jsxc;
          // Check if we have to establish a new connection
          if (!jsxc.storage.getItem('rid') || !jsxc.storage.getItem('sid') || !jsxc.restore) {
 
-           // login without form prompting
-           var username = jsxc.options.xmpp.jid;
-           var password = jsxc.options.xmpp.password;
-            if (username && password) {
-               this.initLoginProcess(username, password)
-               jsxc.gui.init();
-
-               if (typeof (jsxc.storage.getItem('alive')) === 'undefined' || !jsxc.restore) {
-                 jsxc.onMaster();
-               } else {
-                 jsxc.checkMaster();
-               }
-               $("#jsxc_dialog").dialog("close"); // we have to close directly if we have no redirect/submit
-               return;
-            }
-
             // Looking for a login form
             if (!jsxc.options.loginForm.form || !(jsxc.el_exists(jsxc.options.loginForm.form) && jsxc.el_exists(jsxc.options.loginForm.jid) && jsxc.el_exists(jsxc.options.loginForm.pass))) {
 
@@ -312,8 +296,8 @@ var jsxc;
       },
 
       fakeBoxLogin: function() {
-        var jid = jsxc.xmpp.jid;
-        var password = jsxc.xmpp.password;
+        var jid = jsxc.options.xmpp.jid;
+        var password = jsxc.options.xmpp.password;
 
         if (typeof jid === 'undefined' && typeof password === 'undefined') {
           return false
@@ -603,60 +587,6 @@ var jsxc;
       },
 
       /**
-       * Initialize login process through form or directly
-       */
-      initLoginProcess: function(username, password) {
-        jsxc.gui.showWaitAlert(jsxc.l.Logging_in);
-
-        if (typeof jsxc.options.loadSettings !== 'function') {
-          jsxc.error('No loadSettings function given. Abort.');
-          return;
-        }
-
-        var settings = jsxc.options.loadSettings.call(this, username, password);
-        if (settings === null || typeof settings === 'undefined') {
-          return true;
-        }
-        if (typeof settings.xmpp.username === 'string') {
-          username = settings.xmpp.username;
-        }
-
-        var resource = (settings.xmpp.resource) ? '/' + settings.xmpp.resource : '';
-        var domain = settings.xmpp.domain;
-        var jid;
-        if (username.match(/@(.*)$/)) {
-          jid = (username.match(/\/(.*)$/)) ? username : username + resource;
-        } else {
-          jid = username + '@' + domain + resource;
-        }
-        if (typeof jsxc.options.loginForm.preJid === 'function') {
-          jid = jsxc.options.loginForm.preJid(jid);
-        }
-
-        jsxc.cid = jsxc.jidToCid(jid);
-
-        settings.xmpp.username = jid.split('@')[0];
-        settings.xmpp.domain = jid.split('@')[1].split('/')[0];
-        settings.xmpp.resource = jid.split('@')[1].split('/')[1] || "";
-
-        $.each(settings, function(key, val) {
-          jsxc.options.set(key, val);
-        });
-
-        jsxc.options.xmpp.jid = jid;
-        jsxc.options.xmpp.password = password;
-
-        if (settings.xmpp.onlogin === "true" || settings.xmpp.onlogin === true) {
-          jsxc.triggeredFromForm = true;
-          jsxc.xmpp.login();
-
-          // Trigger submit in jsxc.xmpp.connected()
-          return false;
-        }
-        return true;
-      },
-
-      /**
        * This method submits the specified login form.
        */
       submitLoginForm: function() {
@@ -743,11 +673,11 @@ var jsxc;
          return text.replace(/%%([a-zA-Z0-9_-}{ .!,?/'@]+)%%/g, function(s, key) {
             var k = key.replace(/ /gi, '_').replace(/[.!,?/'@]/g, '');
 
-            if (!jsxc.l && !jsxc.l[k]) {
-              jsxc.warn('No translation for: ' + k);
-              return key.replace(/_/g, ' ');
+            if (!jsxc.l[k]) {
+               jsxc.warn('No translation for: ' + k);
             }
-            return jsxc.l[k];
+
+            return jsxc.l[k] || key.replace(/_/g, ' ');
          });
       },
    };
@@ -1431,7 +1361,7 @@ var jsxc;
        */
       showWaitAlert: function(msg) {
          jsxc.gui.dialog.open(jsxc.gui.template.get('waitAlert', null, msg), {
-            'noClose': false // we should be able to close it if we skip form login
+            'noClose': true
          });
       },
 
