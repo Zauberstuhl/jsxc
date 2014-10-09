@@ -108,7 +108,6 @@ module.exports = function(grunt) {
             "lib/jquery.fullscreen.js",
             "lib/jquery.slimscroll.js",
             "lib/dsa-ww.js",
-            "lib/otr/build/otr.min.js",
             "lib/otr/build/dep/bigint.js",
             "lib/otr/build/dep/crypto.js",
             "lib/otr/build/dep/eventemitter.js",
@@ -123,7 +122,8 @@ module.exports = function(grunt) {
             "lib/otr/vendor/bigint.js",
             "lib/otr/vendor/crypto.js",
             "lib/otr/vendor/eventemitter.js",
-            "lib/otr/vendor/salsa20.js"
+            "lib/otr/vendor/salsa20.js",
+            "lib/otr/build/otr.min.js"
           ],
           dest: 'dependencies.js',
         }
