@@ -4,9 +4,6 @@ module.exports = function(grunt) {
    // Project configuration.
    grunt.initConfig({
       app: grunt.file.readJSON('package.json'),
-      meta: {
-         banner: grunt.file.read('banner.js')
-      },
       jshint: {
          options: {
             jshintrc: '.jshintrc'
@@ -97,19 +94,26 @@ module.exports = function(grunt) {
         },
         dist: {
           src: [
-            "lib/dsa-ww.js",
+            "lib/strophe.js",
+            "lib/strophe.caps.js",
+            "lib/strophe.disco.js",
+            "lib/strophe.jingle/strophe.jingle.adapter.js",
+            "lib/strophe.jingle/strophe.jingle.js",
+            "lib/strophe.jingle/strophe.jingle.sdp.js",
+            "lib/strophe.jingle/strophe.jingle.session.js",
+            "lib/strophe.muc.js",
+            "lib/strophe.vcard.js",
+            "lib/jquery.ui.min.js",
             "lib/jquery.colorbox-min.js",
             "lib/jquery.fullscreen.js",
-            "lib/jquery.min.js",
             "lib/jquery.slimscroll.js",
-            "lib/jquery.ui.min.js",
+            "lib/dsa-ww.js",
+            "lib/otr/build/otr.min.js",
             "lib/otr/build/dep/bigint.js",
             "lib/otr/build/dep/crypto.js",
             "lib/otr/build/dep/eventemitter.js",
             "lib/otr/build/dep/salsa20.js",
             "lib/otr/build/dsa-webworker.js",
-            "lib/otr/build/otr.js",
-            "lib/otr/build/otr.min.js",
             "lib/otr/build/sm-webworker.js",
             "lib/otr/lib/const.js",
             "lib/otr/lib/dsa.js",
@@ -119,18 +123,9 @@ module.exports = function(grunt) {
             "lib/otr/vendor/bigint.js",
             "lib/otr/vendor/crypto.js",
             "lib/otr/vendor/eventemitter.js",
-            "lib/otr/vendor/salsa20.js",
-            "lib/strophe.caps.js",
-            "lib/strophe.disco.js",
-            "lib/strophe.jingle/strophe.jingle.adapter.js",
-            "lib/strophe.jingle/strophe.jingle.js",
-            "lib/strophe.jingle/strophe.jingle.sdp.js",
-            "lib/strophe.jingle/strophe.jingle.session.js",
-            "lib/strophe.js",
-            "lib/strophe.muc.js",
-            "lib/strophe.vcard.js"
+            "lib/otr/vendor/salsa20.js"
           ],
-          dest: 'jsxc.deps.js',
+          dest: 'dependencies.js',
         }
       }
    });
