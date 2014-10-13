@@ -95,8 +95,8 @@ module.exports = function(grunt) {
         dist: {
           src: [
             "lib/strophe.js",
-            "lib/strophe.caps.js",
             "lib/strophe.disco.js",
+            "lib/strophe.caps.js",
             "lib/strophe.jingle/strophe.jingle.adapter.js",
             "lib/strophe.jingle/strophe.jingle.js",
             "lib/strophe.jingle/strophe.jingle.sdp.js",
@@ -114,6 +114,7 @@ module.exports = function(grunt) {
             "lib/otr/build/dep/salsa20.js",
             "lib/otr/build/dsa-webworker.js",
             "lib/otr/build/sm-webworker.js",
+            "lib/otr/build/otr.min.js",
             "lib/otr/lib/const.js",
             "lib/otr/lib/dsa.js",
             "lib/otr/lib/dsa-webworker.js",
@@ -122,8 +123,7 @@ module.exports = function(grunt) {
             "lib/otr/vendor/bigint.js",
             "lib/otr/vendor/crypto.js",
             "lib/otr/vendor/eventemitter.js",
-            "lib/otr/vendor/salsa20.js",
-            "lib/otr/build/otr.min.js"
+            "lib/otr/vendor/salsa20.js"
           ],
           dest: 'dependencies.js',
         }
