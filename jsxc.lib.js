@@ -2263,7 +2263,7 @@ var jsxc;
 
          $.each(jsxc.gui.emotions, function(i, val) {
             var ins = val[0].split(' ')[0];
-            var li = $('<li><img alt="' + ins + '" title="' + ins + '" class="' + val[1] + '"/></li>');
+            var li = $('<li><img class="' + val[1] + '"/></li>');
             li.click(function() {
                win.find('input').val(win.find('input').val() + ins);
                win.find('input').focus();

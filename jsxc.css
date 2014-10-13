@@ -195,7 +195,7 @@ li .jsxc_name:hover {
  *############################*/
 div#jsxc_roster {
 	position: fixed;
-	top: 0px;
+	top: 40px;
 	bottom: 0px;
 	right: 0px;
 	width: 200px;
@@ -808,14 +808,14 @@ div.jsxc_window .jsxc_emoticons ul:after {
 div.jsxc_window .jsxc_emoticons li {
 	float: right;
 	cursor: pointer;
-	background-size: 19px 19px;
-	width: 19px;
-	height: 19px;
 }
 
 div.jsxc_window .jsxc_emoticons img {
 	cursor: pointer;
 	border-radius: 3px;
+	background-size: 19px 19px;
+	width: 19px;
+	height: 19px;
 }
 
 div.jsxc_window .jsxc_emoticons img:hover {
