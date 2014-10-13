@@ -87,51 +87,10 @@ module.exports = function(grunt) {
          hooks: {
             command: 'cp pre-commit .git/hooks/'
          }
-      },
-      concat: {
-        options: {
-          separator: ';',
-        },
-        dist: {
-          src: [
-            "lib/strophe.js",
-            "lib/strophe.disco.js",
-            "lib/strophe.caps.js",
-            "lib/strophe.jingle/strophe.jingle.adapter.js",
-            "lib/strophe.jingle/strophe.jingle.js",
-            "lib/strophe.jingle/strophe.jingle.sdp.js",
-            "lib/strophe.jingle/strophe.jingle.session.js",
-            "lib/strophe.muc.js",
-            "lib/strophe.vcard.js",
-            "lib/jquery.ui.min.js",
-            "lib/jquery.colorbox-min.js",
-            "lib/jquery.fullscreen.js",
-            "lib/jquery.slimscroll.js",
-            "lib/dsa-ww.js",
-            "lib/otr/build/dep/bigint.js",
-            "lib/otr/build/dep/crypto.js",
-            "lib/otr/build/dep/eventemitter.js",
-            "lib/otr/build/dep/salsa20.js",
-            "lib/otr/build/dsa-webworker.js",
-            "lib/otr/build/sm-webworker.js",
-            "lib/otr/build/otr.min.js",
-            "lib/otr/lib/const.js",
-            "lib/otr/lib/dsa.js",
-            "lib/otr/lib/dsa-webworker.js",
-            "lib/otr/lib/helpers.js",
-            "lib/otr/lib/sm-webworker.js",
-            "lib/otr/vendor/bigint.js",
-            "lib/otr/vendor/crypto.js",
-            "lib/otr/vendor/eventemitter.js",
-            "lib/otr/vendor/salsa20.js"
-          ],
-          dest: 'dependencies.js',
-        }
       }
    });
 
    // These plugins provide necessary tasks.
-   grunt.loadNpmTasks('grunt-contrib-concat');
    grunt.loadNpmTasks('grunt-contrib-jshint');
    grunt.loadNpmTasks('grunt-contrib-copy');
    grunt.loadNpmTasks('grunt-contrib-clean');
