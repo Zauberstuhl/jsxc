@@ -2263,7 +2263,7 @@ var jsxc;
 
          $.each(jsxc.gui.emotions, function(i, val) {
             var ins = val[0].split(' ')[0];
-            var li = $('<li><img alt="' + ins + '" title="' + ins + '" src="' + jsxc.options.root + '/img/emotions/' + val[1] + '"/></li>');
+            var li = $('<li><img alt="' + ins + '" title="' + ins + '" class="' + val[1] + '"/></li>');
             li.click(function() {
                win.find('input').val(win.find('input').val() + ins);
                win.find('input').focus();
@@ -2554,7 +2554,7 @@ var jsxc;
                   esc += '&#' + p1.charCodeAt(i) + ';';
                }
 
-               return '<img alt="' + esc + '" title="' + esc + '" src="' + jsxc.options.root + '/img/emotions/' + val[1] + '"/>';
+               return '<img alt="' + esc + '" title="' + esc + '" class="' + val[1] + '"/>';
             });
          });
 
