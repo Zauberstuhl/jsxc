@@ -808,6 +808,9 @@ div.jsxc_window .jsxc_emoticons ul:after {
 div.jsxc_window .jsxc_emoticons li {
 	float: right;
 	cursor: pointer;
+	background-size: 19px 19px;
+	width: 19px;
+	height: 19px;
 }
 
 div.jsxc_window .jsxc_emoticons img {
@@ -885,6 +888,7 @@ div.jsxc_chatmessage a {
 div.jsxc_chatmessage img {
 	width: 19px;
 	height: 19px;
+	background-size: 19px 19px;
 }
 
 /** incoming message */

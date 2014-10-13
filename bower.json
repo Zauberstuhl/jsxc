@@ -1,15 +1,13 @@
 {
   "name": "diaspora-jsxc",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "homepage": "https://github.com/Zauberstuhl/jsxc",
   "description": "Real time chat app",
   "main": [
     "lib/strophe.js",
+    "lib/strophe.caps.js",
     "jsxc.css",
-    "jsxc.lib.js",
-    "jsxc.lib.muc.js",
-    "jsxc.lib.webrtc.js",
-    "jsxc.webrtc.css"
+    "jsxc.lib.js"
   ],
   "moduleType": [
     "globals"
