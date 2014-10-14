@@ -1,3 +1,26 @@
+.angel { background: url('img/emotions/angel.png') }
+.angry { background: url('img/emotions/angry.png') }
+.smile { background: url('img/emotions/smile.png') }
+.grin { background: url('img/emotions/grin.png') }
+.sad { background: url('img/emotions/sad.png') }
+.wink { background: url('img/emotions/wink.png') }
+.tonguesmile { background: url('img/emotions/tonguesmile.png') }
+.surprised { background: url('img/emotions/surprised.png') }
+.kiss { background: url('img/emotions/kiss.png') }
+.sunglasses { background: url('img/emotions/sunglassess.png') }
+.crysad { background: url('img/emotions/crysad.png') }
+.doubt { background: url('img/emotions/doubt.png') }
+.zip { background: url('img/emotions/zip.png') }
+.thumbsup { background: url('img/emotions/thumbsup.png') }
+.thumbsdown { background: url('img/emotions/thumbsdown.png') }
+.beer { background: url('img/emotions/beer.png') }
+.devil { background: url('img/emotions/devil.png') }
+.kissing { background: url('img/emotions/kissing.png') }
+.rose { background: url('img/emotions/rose.png') }
+.music { background: url('img/emotions/music.png') }
+.love { background: url('img/emotions/love.png') }
+.tired { background: url('img/emotions/tired.png') }
+
 .jsxc_online,.jsxc_chat {
 	border-left: 4px solid #00BFFF !important;
 }
@@ -790,6 +813,9 @@ div.jsxc_window .jsxc_emoticons li {
 div.jsxc_window .jsxc_emoticons img {
 	cursor: pointer;
 	border-radius: 3px;
+	background-size: 19px 19px;
+	width: 19px;
+	height: 19px;
 }
 
 div.jsxc_window .jsxc_emoticons img:hover {
@@ -862,6 +888,7 @@ div.jsxc_chatmessage a {
 div.jsxc_chatmessage img {
 	width: 19px;
 	height: 19px;
+	background-size: 19px 19px;
 }
 
 /** incoming message */
