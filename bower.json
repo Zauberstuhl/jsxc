@@ -14,7 +14,7 @@
     "build/lib/**/*",
     "build/lib/**/**/*",
     "build/lib/**/**/**/*",
-    "build/sound/*",
+    "build/sound/*"
   ],
   "description": "Real-time chat app",
   "keywords": [
