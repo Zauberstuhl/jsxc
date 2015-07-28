@@ -1,9 +1,20 @@
 {
-  "name": "jsxc",
+  "name": "zauberstuhl_jsxc",
   "version": "2.0.1",
   "homepage": "https://www.jsxc.org",
   "authors": [
     "sualko <klaus@jsxc.org>"
+  ],
+  "main": [
+    "build/*.js",
+    "build/img/*",
+    "build/img/**/*",
+    "build/css/*",
+    "build/lib/*",
+    "build/lib/**/*",
+    "build/lib/**/**/*",
+    "build/lib/**/**/**/*",
+    "build/sound/*",
   ],
   "description": "Real-time chat app",
   "keywords": [
