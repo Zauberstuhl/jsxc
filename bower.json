@@ -33,7 +33,6 @@
     "tmp",
     "locales",
     "img",
-    "build/img/*",
     "example",
     "doc",
     "dev",
