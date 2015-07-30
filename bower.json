@@ -1,6 +1,6 @@
 {
   "name": "zauberstuhl_jsxc",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "homepage": "https://www.jsxc.org",
   "authors": [
     "sualko <klaus@jsxc.org>"
@@ -25,7 +25,6 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "lib",
     "src",
     "sound",
     "scss",
