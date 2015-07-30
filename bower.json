@@ -25,7 +25,7 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "lib/"
+    "lib/",
     "src/",
     "sound/",
     "scss/",
