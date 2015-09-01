@@ -1,0 +1,21 @@
+function fileExists(path) {
+  var res = jQuery.ajax({url: path, async: false});
+  return (res.status == 200)? true : false
+}
+
+describe( "Parse bower.json and check if main files exist", function() {
+  var baseDir = '../../'
+  var bowerFile = baseDir + 'bower.json';
+  var result = JSON.parse(jQuery.ajax({url: bowerFile, async: false}).responseText);
+
+  it("bower.json exists",  function () {
+    expect(result).not.toBe(null);
+  });
+
+  jQuery.each(result.main, function(i) {
+    var file = result.main[i];
+    it(file + " exists", function() {
+      expect(fileExists(baseDir + file)).toBe(true);
+    });
+  });
+});

@@ -286,6 +286,11 @@ module.exports = function(grunt) {
             dest: 'tmp/template.js'
          }
       },
+      karma: {
+        unit: {
+          configFile: 'karma.conf.js'
+        }
+      },
       shell: {
          'precommit-before': {
             command: 'git diff --cached --name-only',
@@ -348,6 +353,7 @@ module.exports = function(grunt) {
    grunt.loadNpmTasks('grunt-jsbeautifier');
    grunt.loadNpmTasks('grunt-prettysass');
    grunt.loadNpmTasks('grunt-html-convert');
+   grunt.loadNpmTasks('grunt-karma');
    grunt.loadNpmTasks('grunt-shell');
 
    //Default task

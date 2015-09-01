@@ -29,12 +29,18 @@
     "grunt-html-convert": "0.0.2",
     "grunt-jsbeautifier": "^0.2.10",
     "grunt-jsdoc": "^0.5.7",
+    "grunt-karma": "^0.12.0",
     "grunt-merge-data": "^0.4.3",
     "grunt-postcss": "^0.2.0",
     "grunt-prettysass": "^0.2.3",
     "grunt-sass": "^0.17.0",
     "grunt-search": "^0.1.6",
     "grunt-shell": "^1.1.2",
-    "grunt-text-replace": "~0.4.0"
+    "grunt-text-replace": "~0.4.0",
+    "jasmine-core": "^2.3.4",
+    "karma": "~>0.13.9",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-firefox-launcher": "^0.1.6",
+    "karma-jasmine": "^0.3.6"
   }
 }
