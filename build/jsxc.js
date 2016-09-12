@@ -269,10 +269,13 @@ jsxc = {
       }
 
       // initialize i18n translator
-      i18next.init({
+      $.i18n.init({
          lng: lang,
          fallbackLng: 'en',
-         resources: I18next,
+         resStore: I18next,
+         // use localStorage and set expiration to a day
+         useLocalStorage: true,
+         localStorageExpirationTime: 60 * 60 * 24 * 1000,
          debug: jsxc.storage.getItem('debug') === true
       });
 
@@ -462,7 +465,7 @@ jsxc = {
       password = password || $(jsxc.options.loginForm.pass).val();
 
       if (!jsxc.triggeredFromBox && (jsxc.options.loginForm.onConnecting === 'dialog' || typeof jsxc.options.loginForm.onConnecting === 'undefined')) {
-         jsxc.gui.showWaitAlert(i18next.t('Logging_in'));
+         jsxc.gui.showWaitAlert($.t('Logging_in'));
       }
 
       var settings;
@@ -1616,7 +1619,7 @@ jsxc.xmpp = {
             jid: jid,
             approve: -1
          });
-         jsxc.notice.add(i18next.t('Friendship_request'), i18next.t('from') + ' ' + jid, 'gui.showApproveDialog', [jid]);
+         jsxc.notice.add($.t('Friendship_request'), $.t('from') + ' ' + jid, 'gui.showApproveDialog', [jid]);
 
          return true;
       } else if (ptype === 'unavailable' || ptype === 'unsubscribed') {
@@ -1655,7 +1658,7 @@ jsxc.xmpp = {
          // buddy has come online
          jsxc.notification.notify({
             title: data.name,
-            msg: i18next.t('has_come_online'),
+            msg: $.t('has_come_online'),
             source: bid
          });
       }
@@ -1762,7 +1765,7 @@ jsxc.xmpp = {
       } else if (forwarded) {
          // Someone forwarded a message to us
 
-         body = from + ' ' + i18next.t('to') + ' ' + $(stanza).attr('to') + '"' + body + '"';
+         body = from + ' ' + $.t('to') + ' ' + $(stanza).attr('to') + '"' + body + '"';
 
          from = $(stanza).attr('from');
       }
@@ -1778,7 +1781,7 @@ jsxc.xmpp = {
          var chat = jsxc.storage.getUserItem('chat', bid) || [];
 
          if (chat.length === 0) {
-            jsxc.notice.add(i18next.t('Unknown_sender'), i18next.t('You_received_a_message_from_an_unknown_sender') + ' (' + bid + ').', 'gui.showUnknownSender', [bid]);
+            jsxc.notice.add($.t('Unknown_sender'), $.t('You_received_a_message_from_an_unknown_sender') + ' (' + bid + ').', 'gui.showUnknownSender', [bid]);
          }
 
          var msg = jsxc.removeHTML(body);
@@ -2623,32 +2626,32 @@ jsxc.gui = {
       jsxc.gui.updatePresence(bid, jsxc.CONST.STATUS[data.status]);
 
       // Change name and add title
-      ue.find('.jsxc_name:first').add(spot).text(data.name).attr('title', i18next.t('is_', {
-         status: i18next.t(jsxc.CONST.STATUS[data.status])
+      ue.find('.jsxc_name:first').add(spot).text(data.name).attr('title', $.t('is_', {
+         status: $.t(jsxc.CONST.STATUS[data.status])
       }));
 
       // Update gui according to encryption state
       switch (data.msgstate) {
          case 0:
-            we.find('.jsxc_transfer').removeClass('jsxc_enc jsxc_fin').attr('title', i18next.t('your_connection_is_unencrypted'));
+            we.find('.jsxc_transfer').removeClass('jsxc_enc jsxc_fin').attr('title', $.t('your_connection_is_unencrypted'));
             we.find('.jsxc_settings .jsxc_verification').addClass('jsxc_disabled');
-            we.find('.jsxc_settings .jsxc_transfer').text(i18next.t('start_private'));
+            we.find('.jsxc_settings .jsxc_transfer').text($.t('start_private'));
             break;
          case 1:
-            we.find('.jsxc_transfer').addClass('jsxc_enc').attr('title', i18next.t('your_connection_is_encrypted'));
+            we.find('.jsxc_transfer').addClass('jsxc_enc').attr('title', $.t('your_connection_is_encrypted'));
             we.find('.jsxc_settings .jsxc_verification').removeClass('jsxc_disabled');
-            we.find('.jsxc_settings .jsxc_transfer').text(i18next.t('close_private'));
+            we.find('.jsxc_settings .jsxc_transfer').text($.t('close_private'));
             break;
          case 2:
             we.find('.jsxc_settings .jsxc_verification').addClass('jsxc_disabled');
-            we.find('.jsxc_transfer').removeClass('jsxc_enc').addClass('jsxc_fin').attr('title', i18next.t('your_buddy_closed_the_private_connection'));
-            we.find('.jsxc_settings .jsxc_transfer').text(i18next.t('close_private'));
+            we.find('.jsxc_transfer').removeClass('jsxc_enc').addClass('jsxc_fin').attr('title', $.t('your_buddy_closed_the_private_connection'));
+            we.find('.jsxc_settings .jsxc_transfer').text($.t('close_private'));
             break;
       }
 
       // update gui according to verification state
       if (data.trust) {
-         we.find('.jsxc_transfer').addClass('jsxc_trust').attr('title', i18next.t('your_buddy_is_verificated'));
+         we.find('.jsxc_transfer').addClass('jsxc_trust').attr('title', $.t('your_buddy_is_verificated'));
       } else {
          we.find('.jsxc_transfer').removeClass('jsxc_trust');
       }
@@ -2661,8 +2664,8 @@ jsxc.gui = {
       }
 
       var info = Strophe.getBareJidFromJid(data.jid) + '\n';
-      info += i18next.t('Subscription') + ': ' + i18next.t(data.sub) + '\n';
-      info += i18next.t('Status') + ': ' + i18next.t(jsxc.CONST.STATUS[data.status]);
+      info += $.t('Subscription') + ': ' + $.t(data.sub) + '\n';
+      info += $.t('Status') + ': ' + $.t(jsxc.CONST.STATUS[data.status]);
 
       ri.find('.jsxc_name').attr('title', info);
 
@@ -2960,7 +2963,7 @@ jsxc.gui = {
          jsxc.gui.window.postMessage({
             bid: bid,
             direction: jsxc.Message.SYS,
-            msg: i18next.t('conversation_is_now_verified')
+            msg: $.t('conversation_is_now_verified')
          });
          jsxc.gui.update(bid);
       });
@@ -2995,7 +2998,7 @@ jsxc.gui = {
          jsxc.gui.window.postMessage({
             bid: bid,
             direction: jsxc.Message.SYS,
-            msg: i18next.t('authentication_query_sent')
+            msg: $.t('authentication_query_sent')
          });
       });
 
@@ -3028,7 +3031,7 @@ jsxc.gui = {
          jsxc.gui.window.postMessage({
             bid: bid,
             direction: 'sys',
-            msg: i18next.t('authentication_query_sent')
+            msg: $.t('authentication_query_sent')
          });
       });
    },
@@ -3319,9 +3322,9 @@ jsxc.gui = {
 
             var status = jsxc.storage.getUserItem('res', bid)[res];
 
-            $('#jsxc_dialog ul.jsxc_vCard').append('<li class="jsxc_sep"><strong>' + i18next.t('Resource') + ':</strong> ' + res + '</li>');
-            $('#jsxc_dialog ul.jsxc_vCard').append('<li><strong>' + i18next.t('Client') + ':</strong> ' + client + '</li>');
-            $('#jsxc_dialog ul.jsxc_vCard').append('<li><strong>' + i18next.t('Status') + ':</strong> ' + i18next.t(jsxc.CONST.STATUS[status]) + '</li>');
+            $('#jsxc_dialog ul.jsxc_vCard').append('<li class="jsxc_sep"><strong>' + $.t('Resource') + ':</strong> ' + res + '</li>');
+            $('#jsxc_dialog ul.jsxc_vCard').append('<li><strong>' + $.t('Client') + ':</strong> ' + client + '</li>');
+            $('#jsxc_dialog ul.jsxc_vCard').append('<li><strong>' + $.t('Status') + ':</strong> ' + $.t(jsxc.CONST.STATUS[status]) + '</li>');
          }
       }
 
@@ -3334,7 +3337,7 @@ jsxc.gui = {
 
             content += '<li>';
 
-            var prop = i18next.t(item[0].tagName);
+            var prop = $.t(item[0].tagName);
 
             if (prop !== ' ') {
                content += '<strong>' + prop + ':</strong> ';
@@ -3375,7 +3378,7 @@ jsxc.gui = {
          $('#jsxc_dialog p').remove();
 
          var content = '<p>';
-         content += i18next.t('Sorry_your_buddy_doesnt_provide_any_information');
+         content += $.t('Sorry_your_buddy_doesnt_provide_any_information');
          content += '</p>';
 
          $('#jsxc_dialog').append(content);
@@ -3521,7 +3524,7 @@ jsxc.gui = {
          }
       });
 
-      jsxc.gui.showConfirmDialog(i18next.t('Should_we_notify_you_'), function() {
+      jsxc.gui.showConfirmDialog($.t('Should_we_notify_you_'), function() {
          jsxc.gui.dialog.open(jsxc.gui.template.get('pleaseAccept'), {
             noClose: true
          });
@@ -3533,7 +3536,7 @@ jsxc.gui = {
    },
 
    showUnknownSender: function(bid) {
-      var confirmationText = i18next.t('You_received_a_message_from_an_unknown_sender_', {
+      var confirmationText = $.t('You_received_a_message_from_an_unknown_sender_', {
          sender: bid
       });
       jsxc.gui.showConfirmDialog(confirmationText, function() {
@@ -3912,7 +3915,7 @@ jsxc.gui.roster = {
       $(jsxc.options.rosterAppend + ':first').append($(jsxc.gui.template.get('roster')));
 
       if (jsxc.options.get('hideOffline')) {
-         $('#jsxc_menu .jsxc_hideOffline').text(i18next.t('Show_offline'));
+         $('#jsxc_menu .jsxc_hideOffline').text($.t('Show_offline'));
          $('#jsxc_buddylist').addClass('jsxc_hideOffline');
       }
 
@@ -3929,7 +3932,7 @@ jsxc.gui.roster = {
             $('#jsxc_buddylist').removeClass('jsxc_hideOffline');
          }
 
-         $(this).text(hideOffline ? i18next.t('Show_offline') : i18next.t('Hide_offline'));
+         $(this).text(hideOffline ? $.t('Show_offline') : $.t('Hide_offline'));
 
          jsxc.options.set('hideOffline', hideOffline);
       });
@@ -4300,7 +4303,7 @@ jsxc.gui.roster = {
 
       $('#jsxc_buddylist').empty();
 
-      $('#jsxc_roster').append($('<p>' + i18next.t('no_connection') + '</p>').append(' <a>' + i18next.t('relogin') + '</a>').click(function() {
+      $('#jsxc_roster').append($('<p>' + $.t('no_connection') + '</p>').append(' <a>' + $.t('relogin') + '</a>').click(function() {
          jsxc.gui.changePresence('online');
       }));
    },
@@ -4311,7 +4314,7 @@ jsxc.gui.roster = {
     * @memberOf jsxc.gui.roster
     */
    empty: function() {
-      var text = $('<p>' + i18next.t('Your_roster_is_empty_add_') + '</p>');
+      var text = $('<p>' + $.t('Your_roster_is_empty_add_') + '</p>');
       var link = text.find('a');
 
       link.click(function() {
@@ -4962,12 +4965,12 @@ jsxc.gui.window = {
 
       if (message.direction === jsxc.Message.OUT && data.msgstate === OTR.CONST.MSGSTATE_FINISHED && message.forwarded !== true) {
          message.direction = jsxc.Message.SYS;
-         message.msg = i18next.t('your_message_wasnt_send_please_end_your_private_conversation');
+         message.msg = $.t('your_message_wasnt_send_please_end_your_private_conversation');
       }
 
       if (message.direction === jsxc.Message.OUT && data.msgstate === OTR.CONST.MSGSTATE_FINISHED) {
          message.direction = 'sys';
-         message.msg = i18next.t('unencrypted_message_received') + ' ' + message.msg;
+         message.msg = $.t('unencrypted_message_received') + ' ' + message.msg;
       }
 
       message.encrypted = message.encrypted || data.msgstate === OTR.CONST.MSGSTATE_ENCRYPTED;
@@ -5342,11 +5345,11 @@ jsxc.gui.window = {
       var content = $('<div>');
 
       var p = $('<p>');
-      p.text(i18next.t('smpRequestReceived'));
+      p.text($.t('smpRequestReceived'));
       p.appendTo(content);
 
       var abort = $('<button>');
-      abort.text(i18next.t('Abort'));
+      abort.text($.t('Abort'));
       abort.click(function() {
          jsxc.gui.window.hideOverlay(bid);
          jsxc.storage.removeUserItem('smp', bid);
@@ -5358,7 +5361,7 @@ jsxc.gui.window = {
       abort.appendTo(content);
 
       var verify = $('<button>');
-      verify.text(i18next.t('Verify'));
+      verify.text($.t('Verify'));
       verify.addClass('jsxc_btn jsxc_btn-primary');
       verify.click(function() {
          jsxc.gui.window.hideOverlay(bid);
@@ -5386,7 +5389,7 @@ jsxc.gui.window = {
             res = fileCapableRes[0];
             jid = bid + '/' + res;
          } else if (fileCapableRes.indexOf(res) < 0) {
-            jsxc.gui.window.selectResource(bid, i18next.t('Your_contact_uses_multiple_clients_'), function(data) {
+            jsxc.gui.window.selectResource(bid, $.t('Your_contact_uses_multiple_clients_'), function(data) {
                if (data.status === 'unavailable') {
                   jsxc.gui.window.hideOverlay(bid);
                } else if (data.status === 'selected') {
@@ -5435,7 +5438,7 @@ jsxc.gui.window = {
             attachment.text(file.name + ' (' + file.size + ' byte)');
          }
 
-         $('<button>').addClass('jsxc_btn jsxc_btn-primary').text(i18next.t('Send')).click(function() {
+         $('<button>').addClass('jsxc_btn jsxc_btn-primary').text($.t('Send')).click(function() {
             var sess = jsxc.webrtc.sendFile(jid, file);
 
             jsxc.gui.window.hideOverlay(bid);
@@ -5460,7 +5463,7 @@ jsxc.gui.window = {
 
          }).appendTo(msg);
 
-         $('<button>').addClass('jsxc_btn jsxc_btn-default').text(i18next.t('Abort')).click(function() {
+         $('<button>').addClass('jsxc_btn jsxc_btn-default').text($.t('Abort')).click(function() {
             jsxc.gui.window.hideOverlay(bid);
          }).appendTo(msg);
       });
@@ -5482,7 +5485,7 @@ jsxc.gui.template.get = function(name, bid, msg) {
 
    // common placeholder
    var ph = {
-      my_priv_fingerprint: jsxc.storage.getUserItem('priv_fingerprint') ? jsxc.storage.getUserItem('priv_fingerprint').replace(/(.{8})/g, '$1 ') : i18next.t('not_available'),
+      my_priv_fingerprint: jsxc.storage.getUserItem('priv_fingerprint') ? jsxc.storage.getUserItem('priv_fingerprint').replace(/(.{8})/g, '$1 ') : $.t('not_available'),
       my_jid: jsxc.storage.getItem('jid') || '',
       my_node: Strophe.getNodeFromJid(jsxc.storage.getItem('jid') || '') || '',
       root: jsxc.options.root,
@@ -5495,7 +5498,7 @@ jsxc.gui.template.get = function(name, bid, msg) {
       var data = jsxc.storage.getUserItem('buddy', bid);
 
       $.extend(ph, {
-         bid_priv_fingerprint: (data && data.fingerprint) ? data.fingerprint.replace(/(.{8})/g, '$1 ') : i18next.t('not_available'),
+         bid_priv_fingerprint: (data && data.fingerprint) ? data.fingerprint.replace(/(.{8})/g, '$1 ') : $.t('not_available'),
          bid_jid: bid,
          bid_name: (data && data.name) ? data.name : bid
       });
@@ -5515,7 +5518,7 @@ jsxc.gui.template.get = function(name, bid, msg) {
       ret = ret.replace(/\{\{root\}\}/g, ph.root);
 
       // convert to string
-      ret = $('<div>').append(i18next.t(ret)).html();
+      ret = $('<div>').append($(ret).i18n()).html();
 
       // replace placeholders
       ret = ret.replace(/\{\{([a-zA-Z0-9_\-]+)\}\}/g, function(s, key) {
@@ -5634,7 +5637,7 @@ jsxc.muc = {
     * @memberOf jsxc.muc
     */
    initMenu: function() {
-      var li = $('<li>').attr('class', 'jsxc_joinChat jsxc_groupcontacticon').text(i18next.t('Join_chat'));
+      var li = $('<li>').attr('class', 'jsxc_joinChat jsxc_groupcontacticon').text($.t('Join_chat'));
 
       li.click(jsxc.muc.showJoinChat);
 
@@ -5675,35 +5678,35 @@ jsxc.muc = {
          switch (condition) {
             case 'not-authorized':
                // password-protected room
-               msg = i18next.t('A_password_is_required');
+               msg = $.t('A_password_is_required');
                break;
             case 'registration-required':
                // members-only room
-               msg = i18next.t('You_are_not_on_the_member_list');
+               msg = $.t('You_are_not_on_the_member_list');
                break;
             case 'forbidden':
                // banned users
-               msg = i18next.t('You_are_banned_from_this_room');
+               msg = $.t('You_are_banned_from_this_room');
                break;
             case 'conflict':
                // nickname conflict
-               msg = i18next.t('Your_desired_nickname_');
+               msg = $.t('Your_desired_nickname_');
                break;
             case 'service-unavailable':
                // max users
-               msg = i18next.t('The_maximum_number_');
+               msg = $.t('The_maximum_number_');
                break;
             case 'item-not-found':
                // locked or non-existing room
-               msg = i18next.t('This_room_is_locked_');
+               msg = $.t('This_room_is_locked_');
                break;
             case 'not-allowed':
                // room creation is restricted
-               msg = i18next.t('You_are_not_allowed_to_create_');
+               msg = $.t('You_are_not_allowed_to_create_');
                break;
             default:
                jsxc.warn('Unknown muc error condition: ' + condition);
-               msg = i18next.t('Error') + ': ' + condition;
+               msg = $.t('Error') + ': ' + condition;
          }
 
          // clean up strophe.muc rooms
@@ -5746,7 +5749,7 @@ jsxc.muc = {
          if (set.length > 0) {
             var count = set.find('count').text() || '?';
 
-            dialog.find('.jsxc_inputinfo').removeClass('jsxc_waiting').text(i18next.t('Could_load_only', {
+            dialog.find('.jsxc_inputinfo').removeClass('jsxc_waiting').text($.t('Could_load_only', {
                count: count
             }));
          } else {
@@ -5821,21 +5824,21 @@ jsxc.muc = {
                });
             };
 
-            dialog.find('.jsxc_msg').append($('<p>').text(i18next.t('Loading_room_information')).addClass('jsxc_waiting'));
+            dialog.find('.jsxc_msg').append($('<p>').text($.t('Loading_room_information')).addClass('jsxc_waiting'));
             jsxc.gui.dialog.resize();
 
             self.conn.disco.info(room, null, function(stanza) {
-               dialog.find('.jsxc_msg').html('<p>' + i18next.t('This_room_is') + '</p>');
+               dialog.find('.jsxc_msg').html('<p>' + $.t('This_room_is') + '</p>');
 
                var table = $('<table>');
 
                $(stanza).find('feature').each(function() {
                   var feature = $(this).attr('var');
 
-                  if (feature !== '' && i18next.exists(feature)) {
+                  if (feature !== '' && i18n.exists(feature)) {
                      var tr = $('<tr>');
-                     $('<td>').text(i18next.t(feature + '.keyword')).appendTo(tr);
-                     $('<td>').text(i18next.t(feature + '.description')).appendTo(tr);
+                     $('<td>').text($.t(feature + '.keyword')).appendTo(tr);
+                     $('<td>').text($.t(feature + '.description')).appendTo(tr);
                      tr.appendTo(table);
                   }
                });
@@ -5850,12 +5853,12 @@ jsxc.muc = {
                discoReceived(roomName, subject);
             }, function() {
                dialog.find('.jsxc_msg').empty();
-               $('<p>').text(i18next.t('Room_not_found_')).appendTo(dialog.find('.jsxc_msg'));
+               $('<p>').text($.t('Room_not_found_')).appendTo(dialog.find('.jsxc_msg'));
 
                discoReceived();
             });
          } else {
-            dialog.find('.jsxc_warning').text(i18next.t('You_already_joined_this_room'));
+            dialog.find('.jsxc_warning').text($.t('You_already_joined_this_room'));
          }
 
          return false;
@@ -5924,12 +5927,12 @@ jsxc.muc = {
       var submit = $('<button>');
       submit.addClass('btn btn-primary');
       submit.attr('type', 'submit');
-      submit.text(i18next.t('Join'));
+      submit.text($.t('Join'));
 
       var cancel = $('<button>');
       cancel.addClass('btn btn-default');
       cancel.attr('type', 'button');
-      cancel.text(i18next.t('Cancel'));
+      cancel.text($.t('Cancel'));
 
       var formGroup = $('<div>');
       formGroup.addClass('form-group');
@@ -6062,7 +6065,7 @@ jsxc.muc = {
       jsxc.gui.window.postMessage({
          bid: room,
          direction: jsxc.Message.SYS,
-         msg: i18next.t('This_room_will_be_closed')
+         msg: $.t('This_room_will_be_closed')
       });
 
       var iq = $iq({
@@ -6211,7 +6214,7 @@ jsxc.muc = {
       });
 
       var destroy = $('<a>');
-      destroy.text(i18next.t('Destroy'));
+      destroy.text($.t('Destroy'));
       destroy.addClass('jsxc_destroy');
       destroy.hide();
       destroy.click(function() {
@@ -6233,7 +6236,7 @@ jsxc.muc = {
       }
 
       var leave = $('<a>');
-      leave.text(i18next.t('Leave'));
+      leave.text($.t('Leave'));
       leave.addClass('jsxc_leave');
       leave.click(function() {
          self.leave(bid);
@@ -6306,7 +6309,7 @@ jsxc.muc = {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: i18next.t('This_room_has_been_closed')
+               msg: $.t('This_room_has_been_closed')
             });
 
             self.close(room);
@@ -6328,7 +6331,7 @@ jsxc.muc = {
                jsxc.gui.window.postMessage({
                   bid: room,
                   direction: jsxc.Message.SYS,
-                  msg: i18next.t('is_now_known_as', {
+                  msg: $.t('is_now_known_as', {
                      oldNickname: nickname,
                      newNickname: newNickname,
                      escapeInterpolation: true
@@ -6339,7 +6342,7 @@ jsxc.muc = {
                jsxc.gui.window.postMessage({
                   bid: room,
                   direction: jsxc.Message.SYS,
-                  msg: i18next.t('left_the_building', {
+                  msg: $.t('left_the_building', {
                      nickname: nickname,
                      escapeInterpolation: true
                   })
@@ -6353,7 +6356,7 @@ jsxc.muc = {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: i18next.t('entered_the_room', {
+               msg: $.t('entered_the_room', {
                   nickname: nickname,
                   escapeInterpolation: true
                })
@@ -6445,7 +6448,7 @@ jsxc.muc = {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: i18next.t('Room_logging_is_enabled')
+            msg: $.t('Room_logging_is_enabled')
          });
       },
       /** Inform occupants that room logging is now disabled */
@@ -6453,7 +6456,7 @@ jsxc.muc = {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: i18next.t('Room_logging_is_disabled')
+            msg: $.t('Room_logging_is_disabled')
          });
       },
       /** Inform occupants that the room is now non-anonymous */
@@ -6461,7 +6464,7 @@ jsxc.muc = {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: i18next.t('Room_is_now_non-anoymous')
+            msg: $.t('Room_is_now_non-anoymous')
          });
       },
       /** Inform occupants that the room is now semi-anonymous */
@@ -6469,7 +6472,7 @@ jsxc.muc = {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: i18next.t('Room_is_now_semi-anonymous')
+            msg: $.t('Room_is_now_semi-anonymous')
          });
       },
       /** Inform user that a new room has been created */
@@ -6489,10 +6492,10 @@ jsxc.muc = {
             });
          } else {
             jsxc.gui.showSelectionDialog({
-               header: i18next.t('Room_creation'),
-               msg: i18next.t('Do_you_want_to_change_the_default_room_configuration'),
+               header: $.t('Room_creation'),
+               msg: $.t('Do_you_want_to_change_the_default_room_configuration'),
                primary: {
-                  label: i18next.t('Default'),
+                  label: $.t('Default'),
                   cb: function() {
                      jsxc.gui.dialog.close();
 
@@ -6502,7 +6505,7 @@ jsxc.muc = {
                   }
                },
                option: {
-                  label: i18next.t('Change'),
+                  label: $.t('Change'),
                   cb: function() {
                      self.showRoomConfiguration(room);
                   }
@@ -6519,7 +6522,7 @@ jsxc.muc = {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: i18next.t('muc_removed_banned')
+               msg: $.t('muc_removed_banned')
             });
 
             jsxc.muc.postReason(room, xdata);
@@ -6527,7 +6530,7 @@ jsxc.muc = {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: i18next.t('muc_removed_info_banned', {
+               msg: $.t('muc_removed_info_banned', {
                   nickname: nickname,
                   escapeInterpolation: true
                })
@@ -6543,7 +6546,7 @@ jsxc.muc = {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: i18next.t('muc_removed_kicked')
+               msg: $.t('muc_removed_kicked')
             });
 
             jsxc.muc.postReason(room, xdata);
@@ -6551,7 +6554,7 @@ jsxc.muc = {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: i18next.t('muc_removed_info_kicked', {
+               msg: $.t('muc_removed_info_kicked', {
                   nickname: nickname,
                   escapeInterpolation: true
                })
@@ -6568,13 +6571,13 @@ jsxc.muc = {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: i18next.t('muc_removed_affiliation')
+               msg: $.t('muc_removed_affiliation')
             });
          } else {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: i18next.t('muc_removed_info_affiliation', {
+               msg: $.t('muc_removed_info_affiliation', {
                   nickname: nickname,
                   escapeInterpolation: true
                })
@@ -6593,13 +6596,13 @@ jsxc.muc = {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: i18next.t('muc_removed_membersonly')
+               msg: $.t('muc_removed_membersonly')
             });
          } else {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: i18next.t('muc_removed_info_membersonly', {
+               msg: $.t('muc_removed_info_membersonly', {
                   nickname: nickname,
                   escapeInterpolation: true
                })
@@ -6615,7 +6618,7 @@ jsxc.muc = {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: i18next.t('muc_removed_shutdown')
+            msg: $.t('muc_removed_shutdown')
          });
       }
    },
@@ -6635,7 +6638,7 @@ jsxc.muc = {
       var reason = xdata.find('reason').text();
 
       if (reason !== '') {
-         reason = i18next.t('Reason') + ': ' + reason;
+         reason = $.t('Reason') + ': ' + reason;
 
          if (typeof actor.name === 'string' || typeof actor.jid === 'string') {
             jsxc.gui.window.postMessage({
@@ -6816,7 +6819,7 @@ jsxc.muc = {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: i18next.t('changed_subject_to', {
+            msg: $.t('changed_subject_to', {
                nickname: nickname,
                subject: subject.text()
             })
@@ -6844,25 +6847,25 @@ jsxc.muc = {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: i18next.t('message_not_send_item-not-found')
+            msg: $.t('message_not_send_item-not-found')
          });
       } else if ($(message).find('forbidden').length > 0) {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: i18next.t('message_not_send_forbidden')
+            msg: $.t('message_not_send_forbidden')
          });
       } else if ($(message).find('not-acceptable').length > 0) {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: i18next.t('message_not_send_not-acceptable')
+            msg: $.t('message_not_send_not-acceptable')
          });
       } else {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: i18next.t('message_not_send')
+            msg: $.t('message_not_send')
          });
       }
 
@@ -6890,7 +6893,7 @@ jsxc.muc = {
 
       var bo = $('<a>');
       $('<span>').addClass('jsxc_icon jsxc_bookmarkicon').appendTo(bo);
-      $('<span>').text(i18next.t('Bookmark')).appendTo(bo);
+      $('<span>').text($.t('Bookmark')).appendTo(bo);
       bo.addClass('jsxc_bookmarkOptions');
       bo.click(function(ev) {
          ev.preventDefault();
@@ -7245,11 +7248,11 @@ jsxc.notification = {
     */
    init: function() {
       $(document).on('postmessagein.jsxc', function(event, bid, msg) {
-         msg = (msg && msg.match(/^\?OTR/)) ? i18next.t('Encrypted_message') : msg;
+         msg = (msg && msg.match(/^\?OTR/)) ? $.t('Encrypted_message') : msg;
          var data = jsxc.storage.getUserItem('buddy', bid);
 
          jsxc.notification.notify({
-            title: i18next.t('New_message_from', {
+            title: $.t('New_message_from', {
                name: data.name
             }),
             msg: msg,
@@ -7320,8 +7323,8 @@ jsxc.notification = {
             jsxc.notification.playSound(o.soundFile, o.loop, o.force);
          }
 
-         var popup = new Notification(i18next.t(o.title), {
-            body: i18next.t(o.msg),
+         var popup = new Notification($.t(o.title), {
+            body: $.t(o.msg),
             icon: icon
          });
 
@@ -7393,7 +7396,7 @@ jsxc.notification = {
 
       $(document).one('postmessagein.jsxc', function() {
          setTimeout(function() {
-            jsxc.notice.add(i18next.t('Notifications') + '?', i18next.t('Should_we_notify_you_'), 'gui.showRequestNotification');
+            jsxc.notice.add($.t('Notifications') + '?', $.t('Should_we_notify_you_'), 'gui.showRequestNotification');
          }, 1000);
       });
    },
@@ -7480,7 +7483,7 @@ jsxc.notification = {
     *        false.
     */
    muteSound: function(external) {
-      $('#jsxc_menu .jsxc_muteNotification').text(i18next.t('Unmute'));
+      $('#jsxc_menu .jsxc_muteNotification').text($.t('Unmute'));
 
       if (external !== true) {
          jsxc.options.set('muteNotification', true);
@@ -7495,7 +7498,7 @@ jsxc.notification = {
     *        false.
     */
    unmuteSound: function(external) {
-      $('#jsxc_menu .jsxc_muteNotification').text(i18next.t('Mute'));
+      $('#jsxc_menu .jsxc_muteNotification').text($.t('Mute'));
 
       if (external !== true) {
          jsxc.options.set('muteNotification', false);
@@ -7816,7 +7819,7 @@ jsxc.otr = {
          jsxc.gui.window.postMessage({
             bid: bid,
             direction: jsxc.Message.SYS,
-            msg: i18next.t('Received_an_unencrypted_message') + '. [' + d.msg + ']',
+            msg: $.t('Received_an_unencrypted_message') + '. [' + d.msg + ']',
             encrypted: d.encrypted,
             forwarded: d.forwarded,
             stamp: d.stamp
@@ -7892,7 +7895,7 @@ jsxc.otr = {
                jsxc.gui.window.postMessage({
                   bid: bid,
                   direction: jsxc.Message.SYS,
-                  msg: i18next.t('trying_to_start_private_conversation')
+                  msg: $.t('trying_to_start_private_conversation')
                });
                break;
             case OTR.CONST.STATUS_AKE_SUCCESS:
@@ -7900,7 +7903,7 @@ jsxc.otr = {
                data.msgstate = OTR.CONST.MSGSTATE_ENCRYPTED;
 
                var msg_state = jsxc.otr.objects[bid].trust ? 'Verified' : 'Unverified';
-               var msg = i18next.t(msg_state + '_private_conversation_started');
+               var msg = $.t(msg_state + '_private_conversation_started');
 
                jsxc.gui.window.postMessage({
                   bid: bid,
@@ -7918,7 +7921,7 @@ jsxc.otr = {
                   jsxc.gui.window.postMessage({
                      bid: bid,
                      direction: jsxc.Message.SYS,
-                     msg: i18next.t('private_conversation_aborted')
+                     msg: $.t('private_conversation_aborted')
                   });
 
                } else {
@@ -7928,7 +7931,7 @@ jsxc.otr = {
                   jsxc.gui.window.postMessage({
                      bid: bid,
                      direction: jsxc.Message.SYS,
-                     msg: i18next.t('your_buddy_closed_the_private_conversation_you_should_do_the_same')
+                     msg: $.t('your_buddy_closed_the_private_conversation_you_should_do_the_same')
                   });
                }
                break;
@@ -7949,7 +7952,7 @@ jsxc.otr = {
                jsxc.gui.window.postMessage({
                   bid: bid,
                   direction: jsxc.Message.SYS,
-                  msg: i18next.t('Authentication_request_received')
+                  msg: $.t('Authentication_request_received')
                });
 
                jsxc.gui.window.smpRequest(bid, data);
@@ -7968,13 +7971,13 @@ jsxc.otr = {
                   jsxc.gui.window.postMessage({
                      bid: bid,
                      direction: jsxc.Message.SYS,
-                     msg: i18next.t('conversation_is_now_verified')
+                     msg: $.t('conversation_is_now_verified')
                   });
                } else {
                   jsxc.gui.window.postMessage({
                      bid: bid,
                      direction: jsxc.Message.SYS,
-                     msg: i18next.t('authentication_failed')
+                     msg: $.t('authentication_failed')
                   });
                }
                jsxc.storage.removeUserItem('smp', bid);
@@ -7985,7 +7988,7 @@ jsxc.otr = {
                jsxc.gui.window.postMessage({
                   bid: bid,
                   direction: jsxc.Message.SYS,
-                  msg: i18next.t('Authentication_aborted')
+                  msg: $.t('Authentication_aborted')
                });
                break;
             default:
@@ -8019,7 +8022,7 @@ jsxc.otr = {
             jsxc.gui.window.postMessage({
                bid: bid,
                direction: jsxc.Message.SYS,
-               msg: '[OTR] ' + i18next.t(err)
+               msg: '[OTR] ' + $.t(err)
             });
          }
 
@@ -8044,11 +8047,11 @@ jsxc.otr = {
 
       if (data) {
          $('#jsxc_dialog > div:eq(2)').find('#jsxc_quest').val(data).prop('disabled', true);
-         $('#jsxc_dialog > div:eq(2)').find('.jsxc_submit').text(i18next.t('Answer'));
-         $('#jsxc_dialog > div:eq(2)').find('.jsxc_explanation').text(i18next.t('onsmp_explanation_question'));
+         $('#jsxc_dialog > div:eq(2)').find('.jsxc_submit').text($.t('Answer'));
+         $('#jsxc_dialog > div:eq(2)').find('.jsxc_explanation').text($.t('onsmp_explanation_question'));
          $('#jsxc_dialog > div:eq(2)').show();
       } else {
-         $('#jsxc_dialog > div:eq(3)').find('.jsxc_explanation').text(i18next.t('onsmp_explanation_secret'));
+         $('#jsxc_dialog > div:eq(3)').find('.jsxc_explanation').text($.t('onsmp_explanation_secret'));
          $('#jsxc_dialog > div:eq(3)').show();
       }
 
@@ -8220,7 +8223,7 @@ jsxc.otr = {
       }
 
       if (jsxc.storage.getUserItem('key') === null) {
-         var msg = i18next.t('Creating_your_private_key_');
+         var msg = $.t('Creating_your_private_key_');
          var worker = null;
 
          if (Worker) {
@@ -9236,11 +9239,11 @@ jsxc.webrtc = {
 
          el.removeClass('jsxc_disabled');
 
-         el.attr('title', i18next.t('Start_video_call'));
+         el.attr('title', $.t('Start_video_call'));
       } else {
          el.addClass('jsxc_disabled');
 
-         el.attr('title', i18next.t('Video_call_not_possible'));
+         el.attr('title', $.t('Video_call_not_possible'));
       }
 
       var fileCapableRes = self.getCapableRes(jid, self.reqFileFeatures);
@@ -9381,13 +9384,13 @@ jsxc.webrtc = {
       var i;
 
       for (i = 0; i < audioTracks.length; i++) {
-         self.setStatus((audioTracks.length > 0) ? i18next.t('Use_local_audio_device') : i18next.t('No_local_audio_device'));
+         self.setStatus((audioTracks.length > 0) ? $.t('Use_local_audio_device') : $.t('No_local_audio_device'));
 
          jsxc.debug('using audio device "' + audioTracks[i].label + '"');
       }
 
       for (i = 0; i < videoTracks.length; i++) {
-         self.setStatus((videoTracks.length > 0) ? i18next.t('Use_local_video_device') : i18next.t('No_local_video_device'));
+         self.setStatus((videoTracks.length > 0) ? $.t('Use_local_video_device') : $.t('No_local_video_device'));
 
          jsxc.debug('using video device "' + videoTracks[i].label + '"');
 
@@ -9414,7 +9417,7 @@ jsxc.webrtc = {
       jsxc.gui.window.postMessage({
          bid: jsxc.jidToBid(jsxc.webrtc.last_caller),
          direction: jsxc.Message.SYS,
-         msg: i18next.t('Media_failure') + ': ' + i18next.t(err.name) + ' (' + err.name + ').'
+         msg: $.t('Media_failure') + ': ' + $.t(err.name) + ' (' + err.name + ').'
       });
 
       jsxc.debug('media failure: ' + err.name);
@@ -9476,11 +9479,11 @@ jsxc.webrtc = {
       jsxc.gui.window.postMessage({
          bid: bid,
          direction: jsxc.Message.SYS,
-         msg: i18next.t('Incoming_call')
+         msg: $.t('Incoming_call')
       });
 
       // display notification
-      jsxc.notification.notify(i18next.t('Incoming_call'), i18next.t('from_sender', {
+      jsxc.notification.notify($.t('Incoming_call'), $.t('from_sender', {
          sender: bid
       }));
 
@@ -9576,7 +9579,7 @@ jsxc.webrtc = {
       jsxc.gui.window.postMessage({
          bid: bid,
          direction: jsxc.Message.SYS,
-         msg: (i18next.t('Call_terminated') + (reason && reason.condition ? (': ' + i18next.t('jingle_reason_' + reason.condition)) : '') + '.')
+         msg: ($.t('Call_terminated') + (reason && reason.condition ? (': ' + $.t('jingle_reason_' + reason.condition)) : '') + '.')
       });
    },
 
@@ -9668,14 +9671,14 @@ jsxc.webrtc = {
          jsxc.gui.window.postMessage({
             bid: jsxc.jidToBid(session.peerID),
             direction: jsxc.Message.SYS,
-            msg: i18next.t('ICE_connection_failure')
+            msg: $.t('ICE_connection_failure')
          });
 
          session.end('failed-transport');
 
          $(document).trigger('callterminated.jingle');
       } else if (state === 'interrupted') {
-         self.setStatus(i18next.t('Connection_interrupted'));
+         self.setStatus($.t('Connection_interrupted'));
       }
    },
 
@@ -9703,7 +9706,7 @@ jsxc.webrtc = {
             jsxc.gui.window.postMessage({
                bid: jsxc.jidToBid(jid),
                direction: jsxc.Message.SYS,
-               msg: i18next.t('Call_started')
+               msg: $.t('Call_started')
             });
 
             $(document).one('error.jingle', function(e, sid, error) {

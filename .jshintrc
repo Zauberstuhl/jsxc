@@ -15,7 +15,7 @@
    "devel": true,
    "globals": {
       "t":true,
-      "i18next":true,
+      "i18n":true,
       "I18next":true,
       "Diaspora":true,
       "OTR":true, 
