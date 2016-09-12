@@ -31,6 +31,11 @@ module.exports = function(grunt) {
                expand: true,
                src: [
                   'lib/i18next/release/i18next-latest.min.js',
+                  'lib/otr/build/dep/salsa20.js',
+                  'lib/otr/build/dep/bigint.js',
+                  'lib/otr/build/dep/crypto.js',
+                  'lib/otr/build/dep/eventemitter.js',
+                  'lib/otr/build/otr.js',
                   'lib/magnific-popup/dist/*.js',
                   'lib/favico.js/favico.js',
                   'lib/emojione/lib/js/*.js',
