@@ -305,11 +305,11 @@ jsxc.webrtc = {
 
          el.removeClass('jsxc_disabled');
 
-         el.attr('title', i18next.t('Start_video_call'));
+         el.attr('title', $.t('Start_video_call'));
       } else {
          el.addClass('jsxc_disabled');
 
-         el.attr('title', i18next.t('Video_call_not_possible'));
+         el.attr('title', $.t('Video_call_not_possible'));
       }
 
       var fileCapableRes = self.getCapableRes(jid, self.reqFileFeatures);
@@ -450,13 +450,13 @@ jsxc.webrtc = {
       var i;
 
       for (i = 0; i < audioTracks.length; i++) {
-         self.setStatus((audioTracks.length > 0) ? i18next.t('Use_local_audio_device') : i18next.t('No_local_audio_device'));
+         self.setStatus((audioTracks.length > 0) ? $.t('Use_local_audio_device') : $.t('No_local_audio_device'));
 
          jsxc.debug('using audio device "' + audioTracks[i].label + '"');
       }
 
       for (i = 0; i < videoTracks.length; i++) {
-         self.setStatus((videoTracks.length > 0) ? i18next.t('Use_local_video_device') : i18next.t('No_local_video_device'));
+         self.setStatus((videoTracks.length > 0) ? $.t('Use_local_video_device') : $.t('No_local_video_device'));
 
          jsxc.debug('using video device "' + videoTracks[i].label + '"');
 
@@ -483,7 +483,7 @@ jsxc.webrtc = {
       jsxc.gui.window.postMessage({
          bid: jsxc.jidToBid(jsxc.webrtc.last_caller),
          direction: jsxc.Message.SYS,
-         msg: i18next.t('Media_failure') + ': ' + i18next.t(err.name) + ' (' + err.name + ').'
+         msg: $.t('Media_failure') + ': ' + $.t(err.name) + ' (' + err.name + ').'
       });
 
       jsxc.debug('media failure: ' + err.name);
@@ -545,11 +545,11 @@ jsxc.webrtc = {
       jsxc.gui.window.postMessage({
          bid: bid,
          direction: jsxc.Message.SYS,
-         msg: i18next.t('Incoming_call')
+         msg: $.t('Incoming_call')
       });
 
       // display notification
-      jsxc.notification.notify(i18next.t('Incoming_call'), i18next.t('from_sender', {
+      jsxc.notification.notify($.t('Incoming_call'), $.t('from_sender', {
          sender: bid
       }));
 
@@ -645,7 +645,7 @@ jsxc.webrtc = {
       jsxc.gui.window.postMessage({
          bid: bid,
          direction: jsxc.Message.SYS,
-         msg: (i18next.t('Call_terminated') + (reason && reason.condition ? (': ' + i18next.t('jingle_reason_' + reason.condition)) : '') + '.')
+         msg: ($.t('Call_terminated') + (reason && reason.condition ? (': ' + $.t('jingle_reason_' + reason.condition)) : '') + '.')
       });
    },
 
@@ -737,14 +737,14 @@ jsxc.webrtc = {
          jsxc.gui.window.postMessage({
             bid: jsxc.jidToBid(session.peerID),
             direction: jsxc.Message.SYS,
-            msg: i18next.t('ICE_connection_failure')
+            msg: $.t('ICE_connection_failure')
          });
 
          session.end('failed-transport');
 
          $(document).trigger('callterminated.jingle');
       } else if (state === 'interrupted') {
-         self.setStatus(i18next.t('Connection_interrupted'));
+         self.setStatus($.t('Connection_interrupted'));
       }
    },
 
@@ -772,7 +772,7 @@ jsxc.webrtc = {
             jsxc.gui.window.postMessage({
                bid: jsxc.jidToBid(jid),
                direction: jsxc.Message.SYS,
-               msg: i18next.t('Call_started')
+               msg: $.t('Call_started')
             });
 
             $(document).one('error.jingle', function(e, sid, error) {

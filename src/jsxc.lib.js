@@ -249,10 +249,13 @@ jsxc = {
       }
 
       // initialize i18n translator
-      i18next.init({
+      $.i18n.init({
          lng: lang,
          fallbackLng: 'en',
-         resources: I18next,
+         resStore: I18next,
+         // use localStorage and set expiration to a day
+         useLocalStorage: true,
+         localStorageExpirationTime: 60 * 60 * 24 * 1000,
          debug: jsxc.storage.getItem('debug') === true
       });
 
@@ -442,7 +445,7 @@ jsxc = {
       password = password || $(jsxc.options.loginForm.pass).val();
 
       if (!jsxc.triggeredFromBox && (jsxc.options.loginForm.onConnecting === 'dialog' || typeof jsxc.options.loginForm.onConnecting === 'undefined')) {
-         jsxc.gui.showWaitAlert(i18next.t('Logging_in'));
+         jsxc.gui.showWaitAlert($.t('Logging_in'));
       }
 
       var settings;
