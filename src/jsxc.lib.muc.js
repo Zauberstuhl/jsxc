@@ -103,7 +103,7 @@ jsxc.muc = {
     * @memberOf jsxc.muc
     */
    initMenu: function() {
-      var li = $('<li>').attr('class', 'jsxc_joinChat jsxc_groupcontacticon').text($.t('Join_chat'));
+      var li = $('<li>').attr('class', 'jsxc_joinChat jsxc_groupcontacticon').text(i18next.t('Join_chat'));
 
       li.click(jsxc.muc.showJoinChat);
 
@@ -144,35 +144,35 @@ jsxc.muc = {
          switch (condition) {
             case 'not-authorized':
                // password-protected room
-               msg = $.t('A_password_is_required');
+               msg = i18next.t('A_password_is_required');
                break;
             case 'registration-required':
                // members-only room
-               msg = $.t('You_are_not_on_the_member_list');
+               msg = i18next.t('You_are_not_on_the_member_list');
                break;
             case 'forbidden':
                // banned users
-               msg = $.t('You_are_banned_from_this_room');
+               msg = i18next.t('You_are_banned_from_this_room');
                break;
             case 'conflict':
                // nickname conflict
-               msg = $.t('Your_desired_nickname_');
+               msg = i18next.t('Your_desired_nickname_');
                break;
             case 'service-unavailable':
                // max users
-               msg = $.t('The_maximum_number_');
+               msg = i18next.t('The_maximum_number_');
                break;
             case 'item-not-found':
                // locked or non-existing room
-               msg = $.t('This_room_is_locked_');
+               msg = i18next.t('This_room_is_locked_');
                break;
             case 'not-allowed':
                // room creation is restricted
-               msg = $.t('You_are_not_allowed_to_create_');
+               msg = i18next.t('You_are_not_allowed_to_create_');
                break;
             default:
                jsxc.warn('Unknown muc error condition: ' + condition);
-               msg = $.t('Error') + ': ' + condition;
+               msg = i18next.t('Error') + ': ' + condition;
          }
 
          // clean up strophe.muc rooms
@@ -215,7 +215,7 @@ jsxc.muc = {
          if (set.length > 0) {
             var count = set.find('count').text() || '?';
 
-            dialog.find('.jsxc_inputinfo').removeClass('jsxc_waiting').text($.t('Could_load_only', {
+            dialog.find('.jsxc_inputinfo').removeClass('jsxc_waiting').text(i18next.t('Could_load_only', {
                count: count
             }));
          } else {
@@ -290,21 +290,21 @@ jsxc.muc = {
                });
             };
 
-            dialog.find('.jsxc_msg').append($('<p>').text($.t('Loading_room_information')).addClass('jsxc_waiting'));
+            dialog.find('.jsxc_msg').append($('<p>').text(i18next.t('Loading_room_information')).addClass('jsxc_waiting'));
             jsxc.gui.dialog.resize();
 
             self.conn.disco.info(room, null, function(stanza) {
-               dialog.find('.jsxc_msg').html('<p>' + $.t('This_room_is') + '</p>');
+               dialog.find('.jsxc_msg').html('<p>' + i18next.t('This_room_is') + '</p>');
 
                var table = $('<table>');
 
                $(stanza).find('feature').each(function() {
                   var feature = $(this).attr('var');
 
-                  if (feature !== '' && i18n.exists(feature)) {
+                  if (feature !== '' && i18next.exists(feature)) {
                      var tr = $('<tr>');
-                     $('<td>').text($.t(feature + '.keyword')).appendTo(tr);
-                     $('<td>').text($.t(feature + '.description')).appendTo(tr);
+                     $('<td>').text(i18next.t(feature + '.keyword')).appendTo(tr);
+                     $('<td>').text(i18next.t(feature + '.description')).appendTo(tr);
                      tr.appendTo(table);
                   }
                });
@@ -319,12 +319,12 @@ jsxc.muc = {
                discoReceived(roomName, subject);
             }, function() {
                dialog.find('.jsxc_msg').empty();
-               $('<p>').text($.t('Room_not_found_')).appendTo(dialog.find('.jsxc_msg'));
+               $('<p>').text(i18next.t('Room_not_found_')).appendTo(dialog.find('.jsxc_msg'));
 
                discoReceived();
             });
          } else {
-            dialog.find('.jsxc_warning').text($.t('You_already_joined_this_room'));
+            dialog.find('.jsxc_warning').text(i18next.t('You_already_joined_this_room'));
          }
 
          return false;
@@ -393,12 +393,12 @@ jsxc.muc = {
       var submit = $('<button>');
       submit.addClass('btn btn-primary');
       submit.attr('type', 'submit');
-      submit.text($.t('Join'));
+      submit.text(i18next.t('Join'));
 
       var cancel = $('<button>');
       cancel.addClass('btn btn-default');
       cancel.attr('type', 'button');
-      cancel.text($.t('Cancel'));
+      cancel.text(i18next.t('Cancel'));
 
       var formGroup = $('<div>');
       formGroup.addClass('form-group');
@@ -531,7 +531,7 @@ jsxc.muc = {
       jsxc.gui.window.postMessage({
          bid: room,
          direction: jsxc.Message.SYS,
-         msg: $.t('This_room_will_be_closed')
+         msg: i18next.t('This_room_will_be_closed')
       });
 
       var iq = $iq({
@@ -680,7 +680,7 @@ jsxc.muc = {
       });
 
       var destroy = $('<a>');
-      destroy.text($.t('Destroy'));
+      destroy.text(i18next.t('Destroy'));
       destroy.addClass('jsxc_destroy');
       destroy.hide();
       destroy.click(function() {
@@ -702,7 +702,7 @@ jsxc.muc = {
       }
 
       var leave = $('<a>');
-      leave.text($.t('Leave'));
+      leave.text(i18next.t('Leave'));
       leave.addClass('jsxc_leave');
       leave.click(function() {
          self.leave(bid);
@@ -775,7 +775,7 @@ jsxc.muc = {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: $.t('This_room_has_been_closed')
+               msg: i18next.t('This_room_has_been_closed')
             });
 
             self.close(room);
@@ -797,7 +797,7 @@ jsxc.muc = {
                jsxc.gui.window.postMessage({
                   bid: room,
                   direction: jsxc.Message.SYS,
-                  msg: $.t('is_now_known_as', {
+                  msg: i18next.t('is_now_known_as', {
                      oldNickname: nickname,
                      newNickname: newNickname,
                      escapeInterpolation: true
@@ -808,7 +808,7 @@ jsxc.muc = {
                jsxc.gui.window.postMessage({
                   bid: room,
                   direction: jsxc.Message.SYS,
-                  msg: $.t('left_the_building', {
+                  msg: i18next.t('left_the_building', {
                      nickname: nickname,
                      escapeInterpolation: true
                   })
@@ -822,7 +822,7 @@ jsxc.muc = {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: $.t('entered_the_room', {
+               msg: i18next.t('entered_the_room', {
                   nickname: nickname,
                   escapeInterpolation: true
                })
@@ -914,7 +914,7 @@ jsxc.muc = {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: $.t('Room_logging_is_enabled')
+            msg: i18next.t('Room_logging_is_enabled')
          });
       },
       /** Inform occupants that room logging is now disabled */
@@ -922,7 +922,7 @@ jsxc.muc = {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: $.t('Room_logging_is_disabled')
+            msg: i18next.t('Room_logging_is_disabled')
          });
       },
       /** Inform occupants that the room is now non-anonymous */
@@ -930,7 +930,7 @@ jsxc.muc = {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: $.t('Room_is_now_non-anoymous')
+            msg: i18next.t('Room_is_now_non-anoymous')
          });
       },
       /** Inform occupants that the room is now semi-anonymous */
@@ -938,7 +938,7 @@ jsxc.muc = {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: $.t('Room_is_now_semi-anonymous')
+            msg: i18next.t('Room_is_now_semi-anonymous')
          });
       },
       /** Inform user that a new room has been created */
@@ -958,10 +958,10 @@ jsxc.muc = {
             });
          } else {
             jsxc.gui.showSelectionDialog({
-               header: $.t('Room_creation'),
-               msg: $.t('Do_you_want_to_change_the_default_room_configuration'),
+               header: i18next.t('Room_creation'),
+               msg: i18next.t('Do_you_want_to_change_the_default_room_configuration'),
                primary: {
-                  label: $.t('Default'),
+                  label: i18next.t('Default'),
                   cb: function() {
                      jsxc.gui.dialog.close();
 
@@ -971,7 +971,7 @@ jsxc.muc = {
                   }
                },
                option: {
-                  label: $.t('Change'),
+                  label: i18next.t('Change'),
                   cb: function() {
                      self.showRoomConfiguration(room);
                   }
@@ -988,7 +988,7 @@ jsxc.muc = {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: $.t('muc_removed_banned')
+               msg: i18next.t('muc_removed_banned')
             });
 
             jsxc.muc.postReason(room, xdata);
@@ -996,7 +996,7 @@ jsxc.muc = {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: $.t('muc_removed_info_banned', {
+               msg: i18next.t('muc_removed_info_banned', {
                   nickname: nickname,
                   escapeInterpolation: true
                })
@@ -1012,7 +1012,7 @@ jsxc.muc = {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: $.t('muc_removed_kicked')
+               msg: i18next.t('muc_removed_kicked')
             });
 
             jsxc.muc.postReason(room, xdata);
@@ -1020,7 +1020,7 @@ jsxc.muc = {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: $.t('muc_removed_info_kicked', {
+               msg: i18next.t('muc_removed_info_kicked', {
                   nickname: nickname,
                   escapeInterpolation: true
                })
@@ -1037,13 +1037,13 @@ jsxc.muc = {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: $.t('muc_removed_affiliation')
+               msg: i18next.t('muc_removed_affiliation')
             });
          } else {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: $.t('muc_removed_info_affiliation', {
+               msg: i18next.t('muc_removed_info_affiliation', {
                   nickname: nickname,
                   escapeInterpolation: true
                })
@@ -1062,13 +1062,13 @@ jsxc.muc = {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: $.t('muc_removed_membersonly')
+               msg: i18next.t('muc_removed_membersonly')
             });
          } else {
             jsxc.gui.window.postMessage({
                bid: room,
                direction: jsxc.Message.SYS,
-               msg: $.t('muc_removed_info_membersonly', {
+               msg: i18next.t('muc_removed_info_membersonly', {
                   nickname: nickname,
                   escapeInterpolation: true
                })
@@ -1084,7 +1084,7 @@ jsxc.muc = {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: $.t('muc_removed_shutdown')
+            msg: i18next.t('muc_removed_shutdown')
          });
       }
    },
@@ -1104,7 +1104,7 @@ jsxc.muc = {
       var reason = xdata.find('reason').text();
 
       if (reason !== '') {
-         reason = $.t('Reason') + ': ' + reason;
+         reason = i18next.t('Reason') + ': ' + reason;
 
          if (typeof actor.name === 'string' || typeof actor.jid === 'string') {
             jsxc.gui.window.postMessage({
@@ -1285,7 +1285,7 @@ jsxc.muc = {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: $.t('changed_subject_to', {
+            msg: i18next.t('changed_subject_to', {
                nickname: nickname,
                subject: subject.text()
             })
@@ -1313,25 +1313,25 @@ jsxc.muc = {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: $.t('message_not_send_item-not-found')
+            msg: i18next.t('message_not_send_item-not-found')
          });
       } else if ($(message).find('forbidden').length > 0) {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: $.t('message_not_send_forbidden')
+            msg: i18next.t('message_not_send_forbidden')
          });
       } else if ($(message).find('not-acceptable').length > 0) {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: $.t('message_not_send_not-acceptable')
+            msg: i18next.t('message_not_send_not-acceptable')
          });
       } else {
          jsxc.gui.window.postMessage({
             bid: room,
             direction: jsxc.Message.SYS,
-            msg: $.t('message_not_send')
+            msg: i18next.t('message_not_send')
          });
       }
 
@@ -1359,7 +1359,7 @@ jsxc.muc = {
 
       var bo = $('<a>');
       $('<span>').addClass('jsxc_icon jsxc_bookmarkicon').appendTo(bo);
-      $('<span>').text($.t('Bookmark')).appendTo(bo);
+      $('<span>').text(i18next.t('Bookmark')).appendTo(bo);
       bo.addClass('jsxc_bookmarkOptions');
       bo.click(function(ev) {
          ev.preventDefault();

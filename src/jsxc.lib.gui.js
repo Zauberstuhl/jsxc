@@ -192,32 +192,32 @@ jsxc.gui = {
       jsxc.gui.updatePresence(bid, jsxc.CONST.STATUS[data.status]);
 
       // Change name and add title
-      ue.find('.jsxc_name:first').add(spot).text(data.name).attr('title', $.t('is_', {
-         status: $.t(jsxc.CONST.STATUS[data.status])
+      ue.find('.jsxc_name:first').add(spot).text(data.name).attr('title', i18next.t('is_', {
+         status: i18next.t(jsxc.CONST.STATUS[data.status])
       }));
 
       // Update gui according to encryption state
       switch (data.msgstate) {
          case 0:
-            we.find('.jsxc_transfer').removeClass('jsxc_enc jsxc_fin').attr('title', $.t('your_connection_is_unencrypted'));
+            we.find('.jsxc_transfer').removeClass('jsxc_enc jsxc_fin').attr('title', i18next.t('your_connection_is_unencrypted'));
             we.find('.jsxc_settings .jsxc_verification').addClass('jsxc_disabled');
-            we.find('.jsxc_settings .jsxc_transfer').text($.t('start_private'));
+            we.find('.jsxc_settings .jsxc_transfer').text(i18next.t('start_private'));
             break;
          case 1:
-            we.find('.jsxc_transfer').addClass('jsxc_enc').attr('title', $.t('your_connection_is_encrypted'));
+            we.find('.jsxc_transfer').addClass('jsxc_enc').attr('title', i18next.t('your_connection_is_encrypted'));
             we.find('.jsxc_settings .jsxc_verification').removeClass('jsxc_disabled');
-            we.find('.jsxc_settings .jsxc_transfer').text($.t('close_private'));
+            we.find('.jsxc_settings .jsxc_transfer').text(i18next.t('close_private'));
             break;
          case 2:
             we.find('.jsxc_settings .jsxc_verification').addClass('jsxc_disabled');
-            we.find('.jsxc_transfer').removeClass('jsxc_enc').addClass('jsxc_fin').attr('title', $.t('your_buddy_closed_the_private_connection'));
-            we.find('.jsxc_settings .jsxc_transfer').text($.t('close_private'));
+            we.find('.jsxc_transfer').removeClass('jsxc_enc').addClass('jsxc_fin').attr('title', i18next.t('your_buddy_closed_the_private_connection'));
+            we.find('.jsxc_settings .jsxc_transfer').text(i18next.t('close_private'));
             break;
       }
 
       // update gui according to verification state
       if (data.trust) {
-         we.find('.jsxc_transfer').addClass('jsxc_trust').attr('title', $.t('your_buddy_is_verificated'));
+         we.find('.jsxc_transfer').addClass('jsxc_trust').attr('title', i18next.t('your_buddy_is_verificated'));
       } else {
          we.find('.jsxc_transfer').removeClass('jsxc_trust');
       }
@@ -230,8 +230,8 @@ jsxc.gui = {
       }
 
       var info = Strophe.getBareJidFromJid(data.jid) + '\n';
-      info += $.t('Subscription') + ': ' + $.t(data.sub) + '\n';
-      info += $.t('Status') + ': ' + $.t(jsxc.CONST.STATUS[data.status]);
+      info += i18next.t('Subscription') + ': ' + i18next.t(data.sub) + '\n';
+      info += i18next.t('Status') + ': ' + i18next.t(jsxc.CONST.STATUS[data.status]);
 
       ri.find('.jsxc_name').attr('title', info);
 
@@ -529,7 +529,7 @@ jsxc.gui = {
          jsxc.gui.window.postMessage({
             bid: bid,
             direction: jsxc.Message.SYS,
-            msg: $.t('conversation_is_now_verified')
+            msg: i18next.t('conversation_is_now_verified')
          });
          jsxc.gui.update(bid);
       });
@@ -564,7 +564,7 @@ jsxc.gui = {
          jsxc.gui.window.postMessage({
             bid: bid,
             direction: jsxc.Message.SYS,
-            msg: $.t('authentication_query_sent')
+            msg: i18next.t('authentication_query_sent')
          });
       });
 
@@ -597,7 +597,7 @@ jsxc.gui = {
          jsxc.gui.window.postMessage({
             bid: bid,
             direction: 'sys',
-            msg: $.t('authentication_query_sent')
+            msg: i18next.t('authentication_query_sent')
          });
       });
    },
@@ -888,9 +888,9 @@ jsxc.gui = {
 
             var status = jsxc.storage.getUserItem('res', bid)[res];
 
-            $('#jsxc_dialog ul.jsxc_vCard').append('<li class="jsxc_sep"><strong>' + $.t('Resource') + ':</strong> ' + res + '</li>');
-            $('#jsxc_dialog ul.jsxc_vCard').append('<li><strong>' + $.t('Client') + ':</strong> ' + client + '</li>');
-            $('#jsxc_dialog ul.jsxc_vCard').append('<li><strong>' + $.t('Status') + ':</strong> ' + $.t(jsxc.CONST.STATUS[status]) + '</li>');
+            $('#jsxc_dialog ul.jsxc_vCard').append('<li class="jsxc_sep"><strong>' + i18next.t('Resource') + ':</strong> ' + res + '</li>');
+            $('#jsxc_dialog ul.jsxc_vCard').append('<li><strong>' + i18next.t('Client') + ':</strong> ' + client + '</li>');
+            $('#jsxc_dialog ul.jsxc_vCard').append('<li><strong>' + i18next.t('Status') + ':</strong> ' + i18next.t(jsxc.CONST.STATUS[status]) + '</li>');
          }
       }
 
@@ -903,7 +903,7 @@ jsxc.gui = {
 
             content += '<li>';
 
-            var prop = $.t(item[0].tagName);
+            var prop = i18next.t(item[0].tagName);
 
             if (prop !== ' ') {
                content += '<strong>' + prop + ':</strong> ';
@@ -944,7 +944,7 @@ jsxc.gui = {
          $('#jsxc_dialog p').remove();
 
          var content = '<p>';
-         content += $.t('Sorry_your_buddy_doesnt_provide_any_information');
+         content += i18next.t('Sorry_your_buddy_doesnt_provide_any_information');
          content += '</p>';
 
          $('#jsxc_dialog').append(content);
@@ -1090,7 +1090,7 @@ jsxc.gui = {
          }
       });
 
-      jsxc.gui.showConfirmDialog($.t('Should_we_notify_you_'), function() {
+      jsxc.gui.showConfirmDialog(i18next.t('Should_we_notify_you_'), function() {
          jsxc.gui.dialog.open(jsxc.gui.template.get('pleaseAccept'), {
             noClose: true
          });
@@ -1102,7 +1102,7 @@ jsxc.gui = {
    },
 
    showUnknownSender: function(bid) {
-      var confirmationText = $.t('You_received_a_message_from_an_unknown_sender_', {
+      var confirmationText = i18next.t('You_received_a_message_from_an_unknown_sender_', {
          sender: bid
       });
       jsxc.gui.showConfirmDialog(confirmationText, function() {
@@ -1481,7 +1481,7 @@ jsxc.gui.roster = {
       $(jsxc.options.rosterAppend + ':first').append($(jsxc.gui.template.get('roster')));
 
       if (jsxc.options.get('hideOffline')) {
-         $('#jsxc_menu .jsxc_hideOffline').text($.t('Show_offline'));
+         $('#jsxc_menu .jsxc_hideOffline').text(i18next.t('Show_offline'));
          $('#jsxc_buddylist').addClass('jsxc_hideOffline');
       }
 
@@ -1498,7 +1498,7 @@ jsxc.gui.roster = {
             $('#jsxc_buddylist').removeClass('jsxc_hideOffline');
          }
 
-         $(this).text(hideOffline ? $.t('Show_offline') : $.t('Hide_offline'));
+         $(this).text(hideOffline ? i18next.t('Show_offline') : i18next.t('Hide_offline'));
 
          jsxc.options.set('hideOffline', hideOffline);
       });
@@ -1869,7 +1869,7 @@ jsxc.gui.roster = {
 
       $('#jsxc_buddylist').empty();
 
-      $('#jsxc_roster').append($('<p>' + $.t('no_connection') + '</p>').append(' <a>' + $.t('relogin') + '</a>').click(function() {
+      $('#jsxc_roster').append($('<p>' + i18next.t('no_connection') + '</p>').append(' <a>' + i18next.t('relogin') + '</a>').click(function() {
          jsxc.gui.changePresence('online');
       }));
    },
@@ -1880,7 +1880,7 @@ jsxc.gui.roster = {
     * @memberOf jsxc.gui.roster
     */
    empty: function() {
-      var text = $('<p>' + $.t('Your_roster_is_empty_add_') + '</p>');
+      var text = $('<p>' + i18next.t('Your_roster_is_empty_add_') + '</p>');
       var link = text.find('a');
 
       link.click(function() {
@@ -2531,12 +2531,12 @@ jsxc.gui.window = {
 
       if (message.direction === jsxc.Message.OUT && data.msgstate === OTR.CONST.MSGSTATE_FINISHED && message.forwarded !== true) {
          message.direction = jsxc.Message.SYS;
-         message.msg = $.t('your_message_wasnt_send_please_end_your_private_conversation');
+         message.msg = i18next.t('your_message_wasnt_send_please_end_your_private_conversation');
       }
 
       if (message.direction === jsxc.Message.OUT && data.msgstate === OTR.CONST.MSGSTATE_FINISHED) {
          message.direction = 'sys';
-         message.msg = $.t('unencrypted_message_received') + ' ' + message.msg;
+         message.msg = i18next.t('unencrypted_message_received') + ' ' + message.msg;
       }
 
       message.encrypted = message.encrypted || data.msgstate === OTR.CONST.MSGSTATE_ENCRYPTED;
@@ -2911,11 +2911,11 @@ jsxc.gui.window = {
       var content = $('<div>');
 
       var p = $('<p>');
-      p.text($.t('smpRequestReceived'));
+      p.text(i18next.t('smpRequestReceived'));
       p.appendTo(content);
 
       var abort = $('<button>');
-      abort.text($.t('Abort'));
+      abort.text(i18next.t('Abort'));
       abort.click(function() {
          jsxc.gui.window.hideOverlay(bid);
          jsxc.storage.removeUserItem('smp', bid);
@@ -2927,7 +2927,7 @@ jsxc.gui.window = {
       abort.appendTo(content);
 
       var verify = $('<button>');
-      verify.text($.t('Verify'));
+      verify.text(i18next.t('Verify'));
       verify.addClass('jsxc_btn jsxc_btn-primary');
       verify.click(function() {
          jsxc.gui.window.hideOverlay(bid);
@@ -2955,7 +2955,7 @@ jsxc.gui.window = {
             res = fileCapableRes[0];
             jid = bid + '/' + res;
          } else if (fileCapableRes.indexOf(res) < 0) {
-            jsxc.gui.window.selectResource(bid, $.t('Your_contact_uses_multiple_clients_'), function(data) {
+            jsxc.gui.window.selectResource(bid, i18next.t('Your_contact_uses_multiple_clients_'), function(data) {
                if (data.status === 'unavailable') {
                   jsxc.gui.window.hideOverlay(bid);
                } else if (data.status === 'selected') {
@@ -3004,7 +3004,7 @@ jsxc.gui.window = {
             attachment.text(file.name + ' (' + file.size + ' byte)');
          }
 
-         $('<button>').addClass('jsxc_btn jsxc_btn-primary').text($.t('Send')).click(function() {
+         $('<button>').addClass('jsxc_btn jsxc_btn-primary').text(i18next.t('Send')).click(function() {
             var sess = jsxc.webrtc.sendFile(jid, file);
 
             jsxc.gui.window.hideOverlay(bid);
@@ -3029,7 +3029,7 @@ jsxc.gui.window = {
 
          }).appendTo(msg);
 
-         $('<button>').addClass('jsxc_btn jsxc_btn-default').text($.t('Abort')).click(function() {
+         $('<button>').addClass('jsxc_btn jsxc_btn-default').text(i18next.t('Abort')).click(function() {
             jsxc.gui.window.hideOverlay(bid);
          }).appendTo(msg);
       });
@@ -3051,7 +3051,7 @@ jsxc.gui.template.get = function(name, bid, msg) {
 
    // common placeholder
    var ph = {
-      my_priv_fingerprint: jsxc.storage.getUserItem('priv_fingerprint') ? jsxc.storage.getUserItem('priv_fingerprint').replace(/(.{8})/g, '$1 ') : $.t('not_available'),
+      my_priv_fingerprint: jsxc.storage.getUserItem('priv_fingerprint') ? jsxc.storage.getUserItem('priv_fingerprint').replace(/(.{8})/g, '$1 ') : i18next.t('not_available'),
       my_jid: jsxc.storage.getItem('jid') || '',
       my_node: Strophe.getNodeFromJid(jsxc.storage.getItem('jid') || '') || '',
       root: jsxc.options.root,
@@ -3064,7 +3064,7 @@ jsxc.gui.template.get = function(name, bid, msg) {
       var data = jsxc.storage.getUserItem('buddy', bid);
 
       $.extend(ph, {
-         bid_priv_fingerprint: (data && data.fingerprint) ? data.fingerprint.replace(/(.{8})/g, '$1 ') : $.t('not_available'),
+         bid_priv_fingerprint: (data && data.fingerprint) ? data.fingerprint.replace(/(.{8})/g, '$1 ') : i18next.t('not_available'),
          bid_jid: bid,
          bid_name: (data && data.name) ? data.name : bid
       });
@@ -3084,7 +3084,7 @@ jsxc.gui.template.get = function(name, bid, msg) {
       ret = ret.replace(/\{\{root\}\}/g, ph.root);
 
       // convert to string
-      ret = $('<div>').append($(ret).i18n()).html();
+      ret = $('<div>').append(i18next.t(ret)).html();
 
       // replace placeholders
       ret = ret.replace(/\{\{([a-zA-Z0-9_\-]+)\}\}/g, function(s, key) {

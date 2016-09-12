@@ -85,7 +85,7 @@ module.exports = function(grunt) {
             }]
          },
          locales: {
-            src: ['<%= target %>/lib/translation.js'],
+            src: ['<%= target %>/translation.js'],
             overwrite: true,
             replacements: [{
                from: /^{/g,
@@ -124,7 +124,7 @@ module.exports = function(grunt) {
       merge_data: {
          target: {
             src: ['locales/*.{json,y{,a}ml}'],
-            dest: '<%= target %>/lib/translation.js'
+            dest: '<%= target %>/translation.js'
          }
       },
       concat: {

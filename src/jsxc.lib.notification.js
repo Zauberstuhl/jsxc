@@ -15,11 +15,11 @@ jsxc.notification = {
     */
    init: function() {
       $(document).on('postmessagein.jsxc', function(event, bid, msg) {
-         msg = (msg && msg.match(/^\?OTR/)) ? $.t('Encrypted_message') : msg;
+         msg = (msg && msg.match(/^\?OTR/)) ? i18next.t('Encrypted_message') : msg;
          var data = jsxc.storage.getUserItem('buddy', bid);
 
          jsxc.notification.notify({
-            title: $.t('New_message_from', {
+            title: i18next.t('New_message_from', {
                name: data.name
             }),
             msg: msg,
@@ -90,8 +90,8 @@ jsxc.notification = {
             jsxc.notification.playSound(o.soundFile, o.loop, o.force);
          }
 
-         var popup = new Notification($.t(o.title), {
-            body: $.t(o.msg),
+         var popup = new Notification(i18next.t(o.title), {
+            body: i18next.t(o.msg),
             icon: icon
          });
 
@@ -163,7 +163,7 @@ jsxc.notification = {
 
       $(document).one('postmessagein.jsxc', function() {
          setTimeout(function() {
-            jsxc.notice.add($.t('Notifications') + '?', $.t('Should_we_notify_you_'), 'gui.showRequestNotification');
+            jsxc.notice.add(i18next.t('Notifications') + '?', i18next.t('Should_we_notify_you_'), 'gui.showRequestNotification');
          }, 1000);
       });
    },
@@ -250,7 +250,7 @@ jsxc.notification = {
     *        false.
     */
    muteSound: function(external) {
-      $('#jsxc_menu .jsxc_muteNotification').text($.t('Unmute'));
+      $('#jsxc_menu .jsxc_muteNotification').text(i18next.t('Unmute'));
 
       if (external !== true) {
          jsxc.options.set('muteNotification', true);
@@ -265,7 +265,7 @@ jsxc.notification = {
     *        false.
     */
    unmuteSound: function(external) {
-      $('#jsxc_menu .jsxc_muteNotification').text($.t('Mute'));
+      $('#jsxc_menu .jsxc_muteNotification').text(i18next.t('Mute'));
 
       if (external !== true) {
          jsxc.options.set('muteNotification', false);
