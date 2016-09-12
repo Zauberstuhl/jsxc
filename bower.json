@@ -46,7 +46,7 @@
     "favico.js": "^0.3.10",
     "strophejs-plugins": "^0.0.6",
     "strophejs": "^1.2.7",
-    "i18next": "^3.4.1",
+    "i18next": "^1.11.2",
     "magnific-popup": "^1.1.0"
   }
 }
