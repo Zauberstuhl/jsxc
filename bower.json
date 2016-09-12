@@ -5,7 +5,7 @@
     "sualko <klaus@jsxc.org>"
   ],
   "main": [
-    "build/lib/translation.js",
+    "build/translation.js",
     "build/jsxc.min.js",
     "build/css/jsxc.css"
   ],
